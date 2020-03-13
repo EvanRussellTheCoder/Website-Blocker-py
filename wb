@@ -1,0 +1,36 @@
+import time
+from datetime import datetime as dt
+#Mac and Linux: "Website Blocker/hosts" #insert the folder path where the hosts file is for Mac and Linux in the hosts_path variable, the path will look something like "/etc/hosts"
+hosts_temp = "hosts"
+#insert the folder path where the hosts file is for Windows here, to run on Windows, make this file a ".pyw" file instead of ".py"
+hosts_path = r"" 
+#enter your IP address here in quotes, redirect will direct a blocked website search back to your IP address
+redirect = "" 
+#list of websites that will be blocked, pass each website in as 2 strings, one with www. in front of the website link, and the other without the www. (example: "www.facebook.com", "facebook.com")
+website_list = [] 
+#during a certain time period, the website blocker will redirect the websites to the IP address. To enter the time period where you want websites to be blocked off, change the numbers in each of the parenthesis. The one written here says it will start at 8:00am and end at 16:00(4pm) 
+while True: 
+   if dt(dt.now().year, dt.now().month, dt.now().day,8) < dt.now() < dt(dt.now().year, dt.now().month, dt.now().day,16):
+        print("Stop trying to slack off you silly little slacker")
+        open(hosts_path,"r+") as file:
+            content = file.read()
+            print(content)
+            #loop that says if the website is in the file already, the website does not get written to the file
+            for website in websites: 
+                if website in content:
+                    pass
+                else:
+                    file.write(redirect+" "+website+"\n")
+    else:
+        with open(hosts_path,"r+") as file:
+            content =file.readlines()
+            file.seek()
+            #loop that says if the website is not in the file, then write the website into the file
+            for line in content: 
+                if not any(website in line for website in website_list):
+                    file.write(line)
+            #cuts file so the same info won't be repeatedly put onto a host file that will be created to view data for the program
+            file.truncate()
+        print("Time to do whatever you want since you're not working :)")
+    #checks whether or not it's time for the website blocker to block the websites, if I type in 5 in time.sleeo(), it will check my time once every 5 seconds
+    time.sleep(5)
